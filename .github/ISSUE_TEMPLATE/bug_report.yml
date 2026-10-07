@@ -1,0 +1,31 @@
+name: Bug report
+description: Something does not work as expected
+labels: [bug]
+body:
+  - type: input
+    id: version
+    attributes: { label: Release / firmware, description: "e.g. v1.0.0 on Meshtastic 2.7.26.54e0d8d" }
+    validations: { required: true }
+  - type: input
+    id: hardware
+    attributes: { label: Hardware, description: "Board and E-Ink panel revision if known (V1.1 / V1.1.1 / V1.2)" }
+    validations: { required: true }
+  - type: dropdown
+    id: install
+    attributes:
+      label: How did you install it?
+      options: [Prebuilt .app.bin with esptool, Prebuilt .factory.bin / web flasher, Built from the patch, Other]
+    validations: { required: true }
+  - type: textarea
+    id: what
+    attributes: { label: What happened?, description: "What did you expect instead? Photos of the screen help." }
+    validations: { required: true }
+  - type: textarea
+    id: steps
+    attributes: { label: Steps to reproduce }
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: "Serial log or esptool output. Remove channel keys, coordinates and other private data first."
+      render: shell

@@ -1,0 +1,53 @@
+name: Build firmware
+
+on:
+  pull_request:
+  workflow_dispatch:
+  push:
+    tags: ['v*']
+
+env:
+  FW_TAG: v2.7.26.54e0d8d
+  PIO_ENV: heltec-wireless-paper-inkhud
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Clone Meshtastic firmware at the pinned tag
+        run: git clone --depth 1 --recurse-submodules --shallow-submodules --branch "$FW_TAG" https://github.com/meshtastic/firmware.git firmware
+
+      - name: Apply the patch
+        working-directory: firmware
+        run: git apply ../patches/*.patch
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Cache PlatformIO
+        uses: actions/cache@v4
+        with:
+          path: ~/.platformio
+          key: pio-${{ env.FW_TAG }}-${{ env.PIO_ENV }}
+
+      - name: Build
+        working-directory: firmware
+        run: |
+          pip install platformio
+          pio run -e "$PIO_ENV"
+
+      - name: Collect artifacts
+        run: |
+          mkdir -p out
+          cp firmware/.pio/build/$PIO_ENV/firmware-$PIO_ENV-*.bin out/
+          cd out && sha256sum *.bin | tee SHA256SUMS
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: firmware-${{ env.PIO_ENV }}
+          path: out/*

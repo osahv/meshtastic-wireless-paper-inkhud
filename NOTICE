@@ -1,0 +1,14 @@
+Meshtastic Wireless Paper InkHUD add-on
+=======================================
+
+This project is a patch for the Meshtastic firmware (https://github.com/meshtastic/firmware),
+copyright (c) Meshtastic LLC and contributors, licensed under the GNU General Public License v3.0.
+The patch, the overlay files and the binaries built from them are distributed under the same license (see LICENSE).
+
+Corresponding source for the released binaries: the upstream tag recorded in the release name plus the patch in `patches/`
+(or the files in `overlay/`).
+
+Meshtastic(R) is a registered trademark of Meshtastic LLC. Heltec is a trademark of its owner.
+This project is not affiliated with, endorsed or sponsored by Meshtastic LLC or Heltec Automation.
+
+The Windows-1251 fonts used for Cyrillic come from upstream InkHUD (derived from FreeSans/GNU FreeFont via Adafruit GFX font tools).

@@ -1,0 +1,8 @@
+build-work/
+build-output/
+dist/
+.pio/
+*.yaml.bak
+*backup*.json
+*backup*.yaml
+.DS_Store
